@@ -18,8 +18,8 @@ const CUSTOM_ACCESSOR = {
         <div class="ng2-datetime">
             <div [ngClass]="{ 'input-group': !datepickerOptions.hideIcon, 'date': true }">
                 <input id="{{idDatePicker}}" type="text" class="form-control"
-                       [attr.readonly]="readonly"
-                       [attr.required]="required"
+                       [attr.readonly]="readonly || null"
+                       [attr.required]="required || null"
                        [attr.placeholder]="datepickerOptions.placeholder || 'Choose date'"
                        [attr.tabindex]="tabindex"
                        [(ngModel)]="dateModel"
@@ -33,8 +33,8 @@ const CUSTOM_ACCESSOR = {
             </div>
             <div [ngClass]="{ 'input-group': !timepickerOptions.hideIcon, 'bootstrap-timepicker timepicker': true }">
                 <input id="{{idTimePicker}}" type="text" class="form-control input-small"
-                       [attr.readonly]="readonly"
-                       [attr.required]="required"
+                       [attr.readonly]="readonly || null"
+                       [attr.required]="required || null"
                        [attr.placeholder]="timepickerOptions.placeholder || 'Set time'"
                        [attr.tabindex]="tabindex"
                        [(ngModel)]="timeModel"
@@ -118,6 +118,12 @@ export class NKDatetime implements ControlValueAccessor, AfterViewInit, OnDestro
                 } else if (changes['timepickerOptions'].currentValue === false) {
                     this.timepicker.parent().remove();
                 }
+            }
+
+            if (changes['readonly'] && this.datepicker) {
+                this.datepicker.datepicker('destroy');
+                this.datepicker = null;
+                this.init();
             }
         }
     }
