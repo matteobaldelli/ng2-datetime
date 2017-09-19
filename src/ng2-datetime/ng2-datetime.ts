@@ -11,6 +11,9 @@ const CUSTOM_ACCESSOR = {
     multi: true
 };
 
+declare var jQuery : any;
+declare var $ : any;
+
 @Component({
     selector: 'datetime',
     providers: [CUSTOM_ACCESSOR],
